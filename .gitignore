@@ -1,0 +1,6 @@
+/.vs
+/Intermediate
+/Saved
+/Build
+*.sln
+*_BuiltData.uasset
