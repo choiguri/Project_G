@@ -8,6 +8,7 @@
 
 class UCapsuleComponent;
 class USphereComponent;
+
 UCLASS()
 class PROJECT_G_API AMonster : public APawn
 {
@@ -20,6 +21,8 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	AActor* TargetPlayer = nullptr;
 
 public:	
 	// Called every frame
@@ -39,6 +42,7 @@ private:
 	USphereComponent* DetectRange;
 
 public:
+
 	UFUNCTION()
 	void OnPlayerEnterRange(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
@@ -47,4 +51,9 @@ public:
 	UFUNCTION()
 	void OnPlayerExitRange(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	UPROPERTY()
+	bool TargetDetected = false;
+
+
 };
