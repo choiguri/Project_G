@@ -29,6 +29,7 @@ AMonster::AMonster()
 	isFar = true;
 	
 	
+	
 
 }
 
@@ -50,32 +51,35 @@ void AMonster::Tick(float DeltaTime)
 	
 	
 	TickStateMachine(DeltaTime);
-	PrintState(); 
-	if (TargetDetected && TargetPlayer)
-	{	
-		FVector PlayerLocation = TargetPlayer->GetActorLocation();
-		MonsterLocation = GetActorLocation();
-		NewLocation = MonsterLocation + GetActorForwardVector() * 140 * DeltaTime;
+	PrintState();
+	if (ActiveState == State::Moving)
+		SetState(State::Attack);
+	//if (TargetDetected && TargetPlayer && (ActiveState != State::Attack))
+	//{	
+	//	FVector PlayerLocation = TargetPlayer->GetActorLocation();
+	//	MonsterLocation = GetActorLocation();
+	//	NewLocation = MonsterLocation + GetActorForwardVector() * 140 * DeltaTime;
 
-		// 플레이어 위치와 몬스터 위치를 넣어 회전값을 구할 수 있음 
-		FRotator LookPlayer = UKismetMathLibrary::FindLookAtRotation(MonsterLocation, PlayerLocation);
-		FRotator Rotation = FRotator(0.0f, LookPlayer.Yaw, 0.0f);
+	//	// 플레이어 위치와 몬스터 위치를 넣어 회전값을 구할 수 있음 
+	//	FRotator LookPlayer = UKismetMathLibrary::FindLookAtRotation(MonsterLocation, PlayerLocation);
+	//	FRotator Rotation = FRotator(0.0f, LookPlayer.Yaw, 0.0f);
 
-		// 플레이어가 처음 Overlap됐을 때 회전이 너무 빠름 이후에는 부드러움 (수정 필요) or 다른 방법으로 가리기?
-		SetActorRotation(Rotation);
+	//	// 플레이어가 처음 Overlap됐을 때 회전이 너무 빠름 이후에는 부드러움 (수정 필요) or 다른 방법으로 가리기?
+	//	SetActorRotation(Rotation);
 
-		// 플레이어와의 거리가 700 이하이면 정지
-		if (FVector::Dist(NewLocation, PlayerLocation) <= 700.0f)
-		{
-			isFar = false;
-			EndMoving();
-			
-		}
-		else
-		{
-			SetActorLocation(NewLocation);
-		}
-	}
+	//	// 플레이어와의 거리가 700 이하이면 정지
+	//	if (FVector::Dist(NewLocation, PlayerLocation) <= 700.0f)
+	//	{
+	//		isFar = false;
+	//		EndMoving();
+	//		
+	//	}
+	//	else
+	//	{
+	//		isFar = true;
+	//		SetActorLocation(NewLocation);
+	//	}
+	//}
 }
 
 // Called to bind functionality to input
@@ -121,6 +125,8 @@ void AMonster::OnPlayerExitRange(UPrimitiveComponent* OverlappedComponent, AActo
 			TargetDetected = false;
 			TargetPlayer = nullptr;
 			EndMoving();
+			StopAllMontage
+			SetState(State::Idle);
 		}
 	}
 }
@@ -146,10 +152,12 @@ void AMonster::EndAttack()
 	if (isFar == false)
 	{
 		SetState(State::Attack);
+		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, TEXT("isNotFar"));
 	}
 	if (isFar == true)
 	{
 		Attacking = false;
+		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, TEXT("isFar"));
 		SetState(State::Moving);
 	}
 }
@@ -171,6 +179,7 @@ void AMonster::EndMoving()
 		return;
 	SetState(State::Attack);
 }
+
 void AMonster::Attack()
 {
 	if (ActiveState != State::Attack)
@@ -180,6 +189,7 @@ void AMonster::Attack()
 	if (ActiveState == State::Attack)
 	{
 		PlayAttackAnimMontage();
+		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("state ATTack"));
 	}
 
 }
@@ -204,12 +214,19 @@ void AMonster::PlayAttackAnimMontage()
 		return;
 		
 	}
+	if (SkeletalMesh == nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("SkeletalMesh is none"));
+		return;
+	}
 	UAnimInstance* AnimInstance = SkeletalMesh->GetAnimInstance();
 	if (AnimInstance != nullptr)
 	{
+		
 		AnimInstance->Montage_Play(AttackMontage);
-		AnimInstance->Montage_JumpToSection(FName("Attack1"));
-	
+		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("Playing AttackMontage"));
+		
+
 	}
 	else
 	{

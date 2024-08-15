@@ -22,6 +22,6 @@ public :
 	
 
 protected:
-	UPROPERTY(BlueprintReadOnly)
-	AMonster* MyMonster;
+	UPROPERTY(BlueprintReadWrite)
+	AMonster* MyMonster1;
 };

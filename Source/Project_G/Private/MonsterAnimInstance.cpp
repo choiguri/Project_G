@@ -10,7 +10,7 @@ void UMonsterAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
 
-	MyMonster = Cast<AMonster>(TryGetPawnOwner());
+	MyMonster1 = Cast<AMonster>(TryGetPawnOwner());
 }
 
 void UMonsterAnimInstance::NativeUpdateAnimation(float DeltaTime)
