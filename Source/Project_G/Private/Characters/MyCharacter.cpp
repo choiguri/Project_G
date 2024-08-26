@@ -266,8 +266,8 @@ void AMyCharacter::PlayEquipMontage()
 	if (AnimInstance != nullptr)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("PlayEquipMontage Called"));
-		AnimInstance->Montage_JumpToSection(FName("Equip"));
 		AnimInstance->Montage_Play(EquipMontage);
+		AnimInstance->Montage_JumpToSection(FName("Equip"));
 	}
 }
 
@@ -281,8 +281,8 @@ void AMyCharacter::PlayUnEquipMontage()
 	if (AnimInstance != nullptr)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("PlayUnEquipMontage Called"));
-		AnimInstance->Montage_JumpToSection(FName("UnEquip"));
 		AnimInstance->Montage_Play(EquipMontage);
+		AnimInstance->Montage_JumpToSection(FName("UnEquip"));
 	}
 }
 
