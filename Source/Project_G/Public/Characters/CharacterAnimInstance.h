@@ -8,7 +8,7 @@
 #include "CharacterAnimInstance.generated.h"
 
 
-class AMyCharacter;
+class AWCharacter;
 //class UCharacterMovementComponent;
 /**
  * 
@@ -24,7 +24,7 @@ public:
 
 protected:
     UPROPERTY(BlueprintReadWrite)
-    AMyCharacter* MyCharacter;
+    AWCharacter* WCharacter;
 
     /*UPROPERTY(BlueprintReadOnly, Category = "Movement")
     AMyCharacter* MyCharacter;*/

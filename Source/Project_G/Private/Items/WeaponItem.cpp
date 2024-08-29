@@ -4,7 +4,7 @@
 #include "Items/WeaponItem.h"
 #include "Components/SphereComponent.h"
 #include "Components/BoxComponent.h"
-#include "Characters/MyCharacter.h"
+#include "Characters/WCharacter.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 
@@ -16,7 +16,7 @@ void AWeaponItem::BeginPlay()
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, SkeletalMesh ? TEXT("SkeletalMesh is valid") : TEXT("SkeletalMesh is null"));
 	}
 
-	// AddDynamic : °ãÃÄÁ³À¸¸é ¸ÕÀú ½ÇÇàÇÏµµ·Ï ÇÏ´Â°Å
+	// AddDynamic : ê²¹ì³ì¡Œìœ¼ë©´ ë¨¼ì € ì‹¤í–‰í•˜ë„ë¡ í•˜ëŠ”ê±°
 	AttackCollisionBox->OnComponentBeginOverlap.AddDynamic(this, &AWeaponItem::BoxBeginOverlap);
 }
 
@@ -46,7 +46,7 @@ void AWeaponItem::BoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 		GEngine->AddOnScreenDebugMessage(2, 2.f, FColor::Magenta, TEXT("Attack Collsion Overlap"));
 	}
 
-	// ÀÌ°Ç ³Ê¹« ¾î·Á¿ì´Ï ºí·ç ÇÁ¸°Æ®·Î ÇÏÀÚ
+	// ì´ê±´ ë„ˆë¬´ ì–´ë ¤ìš°ë‹ˆ ë¸”ë£¨ í”„ë¦°íŠ¸ë¡œ í•˜ìž
 	FHitResult BoxHit;
 	UKismetSystemLibrary::BoxTraceSingle(this,
 		BoxTraceStart->GetComponentLocation(),	BoxTraceEnd->GetComponentLocation(),
@@ -81,7 +81,7 @@ void AWeaponItem::SetMashSocket(USceneComponent* Parent, FName SocketName)
 	SkeletalMesh->AttachToComponent(Parent, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), SocketName);
 }
 
-// AttackBoxCollision ¼±ÅÃÀûÀ¸·Î È°¼ºÈ­ µÇµµ·Ï
+// AttackBoxCollision ì„ íƒì ìœ¼ë¡œ í™œì„±í™” ë˜ë„ë¡
 void AWeaponItem::SetAttackBoxCollisionEnable(ECollisionEnabled::Type Type)
 {
 	AttackCollisionBox->SetCollisionEnabled(Type);
@@ -114,11 +114,11 @@ AWeaponItem::AWeaponItem()
 	AttackCollisionBox->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
 
 	/*
-	QueryOnly´Â ÀÌ ÄÄÆ÷³ÍÆ®°¡ ¹°¸®Àû Ãæµ¹À» °è»êÇÏÁö ¾ÊÁö¸¸, ¿À¹ö·¦ ÀÌº¥Æ®´Â ¹ß»ý½ÃÅ´
-	AttackCollisionBoxÀÇ ¸ðµç Ãæµ¹ Ã¤³Î¿¡ ´ëÇÑ ÀÀ´äÀ» OverlapÀ¸·Î ¼³Á¤
-	AttackCollisionBox°¡ ECC_Pawn Ãæµ¹ Ã¤³Î¿¡ ´ëÇØ ÀÀ´äÇÏÁö ¾Êµµ·Ï ¼³Á¤ÇÕ´Ï´Ù.
-	ECR (ECollisionResponse):Ãæµ¹ ÀÀ´äÀ» Á¤ÀÇÇÏ´Â ¿­°ÅÇü
-	ECC (ECollisionChannel):Ãæµ¹ Ã¤³ÎÀ» Á¤ÀÇÇÏ´Â ¿­°ÅÇü
+	QueryOnlyëŠ” ì´ ì»´í¬ë„ŒíŠ¸ê°€ ë¬¼ë¦¬ì  ì¶©ëŒì„ ê³„ì‚°í•˜ì§€ ì•Šì§€ë§Œ, ì˜¤ë²„ëž© ì´ë²¤íŠ¸ëŠ” ë°œìƒì‹œí‚´
+	AttackCollisionBoxì˜ ëª¨ë“  ì¶©ëŒ ì±„ë„ì— ëŒ€í•œ ì‘ë‹µì„ Overlapìœ¼ë¡œ ì„¤ì •
+	AttackCollisionBoxê°€ ECC_Pawn ì¶©ëŒ ì±„ë„ì— ëŒ€í•´ ì‘ë‹µí•˜ì§€ ì•Šë„ë¡ ì„¤ì •í•©ë‹ˆë‹¤.
+	ECR (ECollisionResponse):ì¶©ëŒ ì‘ë‹µì„ ì •ì˜í•˜ëŠ” ì—´ê±°í˜•
+	ECC (ECollisionChannel):ì¶©ëŒ ì±„ë„ì„ ì •ì˜í•˜ëŠ” ì—´ê±°í˜•
 	*/
 }
 

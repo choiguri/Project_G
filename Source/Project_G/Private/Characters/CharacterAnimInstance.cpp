@@ -2,7 +2,7 @@
 
 
 #include "Characters/CharacterAnimInstance.h"
-#include "Characters/MyCharacter.h"
+#include "Characters/WCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -10,7 +10,7 @@
 void UCharacterAnimInstance::NativeInitializeAnimation()
 {
     Super::NativeInitializeAnimation();
-    MyCharacter = Cast<AMyCharacter>(TryGetPawnOwner());
+    WCharacter = Cast<AWCharacter>(TryGetPawnOwner());
     /*if (MyCharacter != nullptr)
     {
         MyCharacterMovement = MyCharacter->GetCharacterMovement();
@@ -21,9 +21,9 @@ void UCharacterAnimInstance::NativeUpdateAnimation(float DeltaTime)
 {
     Super::NativeUpdateAnimation(DeltaTime);
 
-    if (MyCharacter != nullptr)
+    if (WCharacter != nullptr)
     {
-        State = MyCharacter->GetState();
+        State = WCharacter->GetState();
     }
     
     

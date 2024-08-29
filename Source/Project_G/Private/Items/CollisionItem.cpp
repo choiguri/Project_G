@@ -3,21 +3,21 @@
 
 #include "Items/CollisionItem.h"
 #include "Components/SphereComponent.h"
-#include "Characters/MyCharacter.h"
+#include "Characters/WCharacter.h"
 
 
 void ACollisionItem::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// AddDynamic: °ãÃÄÁ³À¸¸é ³»°¡ ¿øÇÏ´Â ÇÔ¼ö°¡ ½ÇÇàµÇµµ·Ï ¹ÙÀÎµùÇÏ´Â °Í
+	// AddDynamic: ê²¹ì³ì¡Œìœ¼ë©´ ë‚´ê°€ ì›í•˜ëŠ” í•¨ìˆ˜ê°€ ì‹¤í–‰ë˜ë„ë¡ ë°”ì¸ë”©í•˜ëŠ” ê²ƒ
 	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &ACollisionItem::BeginOverlap);
 	SphereComponent->OnComponentEndOverlap.AddDynamic(this, &ACollisionItem::EndOverlap);
 }
 
 void ACollisionItem::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	AMyCharacter* Character = Cast<AMyCharacter>(OtherActor);
+	AWCharacter* Character = Cast<AWCharacter>(OtherActor);
 	if (Character != nullptr)
 	{
 		Character->SetOverlapItem(this);
@@ -31,19 +31,15 @@ void ACollisionItem::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 
 void ACollisionItem::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	AMyCharacter* Character = Cast<AMyCharacter>(OtherActor);
+	AWCharacter* Character = Cast<AWCharacter>(OtherActor);
 	if (Character != nullptr)
 	{
-		//Ãæµ¹ÀÌ ³¡³ª¸é null°ªÀ¸·Î setÇÔ
 		Character->SetOverlapItem(nullptr);
 	}
 }
 
 ACollisionItem::ACollisionItem()
 {
-	// Ãæµ¹¿¡ »ç¿ëÇÒ º¯¼ö ¼±¾ð ÈÄ ÇÒ´ç
-	/*StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ItemMeshComponent"));*/
-
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollision"));
 	SphereComponent->SetupAttachment(GetRootComponent());
 }
