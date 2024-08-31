@@ -51,7 +51,7 @@ void AMonster::Tick(float DeltaTime)
 	
 	
 	TickStateMachine(DeltaTime);
-	PrintState();
+	//PrintState();
 	
 	if (TargetDetected && TargetPlayer && (ActiveState != State::Attack))
 	{	
