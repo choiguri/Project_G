@@ -39,7 +39,6 @@ protected:
     bool isJump;*/
 
 
-
     UPROPERTY(BlueprintReadOnly, Category = "CharacterState")
     ECharacterState State;
 };
