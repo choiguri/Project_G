@@ -3,7 +3,7 @@
 
 #include "Items/CollisionItem.h"
 #include "Components/SphereComponent.h"
-#include "Characters/WCharacter.h"
+#include "Characters/MyCharacter.h"
 
 
 void ACollisionItem::BeginPlay()
@@ -17,7 +17,7 @@ void ACollisionItem::BeginPlay()
 
 void ACollisionItem::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	AWCharacter* Character = Cast<AWCharacter>(OtherActor);
+	AMyCharacter* Character = Cast<AMyCharacter>(OtherActor);
 	if (Character != nullptr)
 	{
 		Character->SetOverlapItem(this);
@@ -31,7 +31,7 @@ void ACollisionItem::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 
 void ACollisionItem::EndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	AWCharacter* Character = Cast<AWCharacter>(OtherActor);
+	AMyCharacter* Character = Cast<AMyCharacter>(OtherActor);
 	if (Character != nullptr)
 	{
 		Character->SetOverlapItem(nullptr);

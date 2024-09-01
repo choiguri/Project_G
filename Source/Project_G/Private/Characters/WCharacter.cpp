@@ -52,7 +52,6 @@ void AWCharacter::BeginPlay()
 	{
 		AnimInstance->OnPlayMontageNotifyBegin.AddDynamic(this, &AWCharacter::HandleOnMontageNotifyBegin);
 	}
-
 }
 
 // Called every frame
