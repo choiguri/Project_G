@@ -4,7 +4,7 @@
 #include "Monster.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
-#include "MyCharacter.h"
+#include "Characters/MyCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/PawnMovementComponent.h"
 
