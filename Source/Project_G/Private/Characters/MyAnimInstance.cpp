@@ -26,7 +26,8 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaTime)
 		isJump = MyCharacterMovement->IsFalling();
 		isCrouching = MyCharacterMovement->IsCrouching();
 		static int32 MessageKey = 1;
-
+		FString JumpStateString = FString::Printf(TEXT("isJump: %s"), isJump ? TEXT("True") : TEXT("False"));
+		GEngine->AddOnScreenDebugMessage(10, 1.0f, FColor::Red, JumpStateString);
 		// Display the debug messages on screen
 		//FString StraightMoveText = FString::Printf(TEXT("isStraightMove: %s"), isStraightMove ? TEXT("True") : TEXT("False"));
 		//FString BackMoveText = FString::Printf(TEXT("isBackMove: %s"), isBackMove ? TEXT("True") : TEXT("False"));
