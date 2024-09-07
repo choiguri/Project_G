@@ -27,7 +27,7 @@ AMonster::AMonster()
 	Attacking = false;
 	isMoving = false;
 	isFar = true;
-	
+	 
 	
 	
 
@@ -42,6 +42,7 @@ void AMonster::BeginPlay()
 	DetectRange->OnComponentEndOverlap.AddDynamic(this, &AMonster::OnPlayerExitRange);
 
 	ActiveState = State::Idle;
+	AnimInstance = SkeletalMesh->GetAnimInstance();
 }
 
 // Called every frame
@@ -53,7 +54,7 @@ void AMonster::Tick(float DeltaTime)
 	TickStateMachine(DeltaTime);
 	PrintState();
 	
-	if (TargetDetected && TargetPlayer && (ActiveState != State::Attack))
+	if (TargetDetected && TargetPlayer)
 	{	
 		FVector PlayerLocation = TargetPlayer->GetActorLocation();
 		MonsterLocation = GetActorLocation();
@@ -75,6 +76,7 @@ void AMonster::Tick(float DeltaTime)
 		}
 		else
 		{
+			SetState(State::Moving);
 			isFar = true;
 			SetActorLocation(NewLocation);
 		}
@@ -217,7 +219,7 @@ void AMonster::PlayAttackAnimMontage()
 		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Blue, TEXT("SkeletalMesh is none"));
 		return;
 	}
-	UAnimInstance* AnimInstance = SkeletalMesh->GetAnimInstance();
+	
 	if (AnimInstance != nullptr)
 	{
 		
@@ -240,10 +242,10 @@ void AMonster::TickStateMachine(float DeltaTime)
 	case State::Idle:
 		break;
 	case State::Attack:
-		Attack();
+		
 		break;
 	case State::Moving:
-		Move(DeltaTime);	
+		StartMoving();
 		break;
 	default:
 		break;
@@ -265,7 +267,7 @@ void AMonster::SetState(State NewState)
 		case State::Attack:
 			Attacking = true;
 			isMoving = false;
-			StartAttack();
+			Attack();
 			break;
 		case State::Moving:
 			isMoving = true;

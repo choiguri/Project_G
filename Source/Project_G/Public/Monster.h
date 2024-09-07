@@ -123,4 +123,7 @@ public:
 
 	FString EnumToString(State EnumValue);
 	void PrintState();
+
+	UPROPERTY()
+	UAnimInstance* AnimInstance;
 };
